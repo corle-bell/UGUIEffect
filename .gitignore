@@ -1,0 +1,15 @@
+
+/Temp
+/Library
+/Logs
+/Build
+/.vs
+/obj
+.vsconfig
+*.csproj
+*.sln
+*.unitypackage
+.svn
+/.idea
+/Z_Resource
+*.user
