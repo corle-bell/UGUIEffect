@@ -281,10 +281,11 @@ MonoBehaviour:
   Positions:
   - {x: 525.4, y: 722.7, z: 0}
   - {x: 525.4, y: 722.7, z: 0}
+  - {x: 525.4, y: 722.7, z: 0}
   StartColor: {r: 1, g: 1, b: 1, a: 1}
   EndColor: {r: 0, g: 0.4651866, b: 1, a: 1}
   Duration: 0.5
-  MinDistance: 1
+  MinDistance: 8
   LineWidth:
     serializedVersion: 2
     m_Curve:
