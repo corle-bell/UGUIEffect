@@ -36,7 +36,7 @@ namespace UiEffect
             tick = 0;
         }
 
-        public void Clear()
+        public override void Clear()
         {
             Positions.Clear();
             Refresh();
@@ -81,12 +81,12 @@ namespace UiEffect
 
 
             // left 0
-            AddUIVertex(vh, CalculatePointLeft(Vector2.zero, Dir, rect.width * 0.5f), _startColor, Vector2.zero);
+            UGUIEffectHelper.AddUIVertex(vh, UGUIEffectHelper.CalculatePointLeft(Vector2.zero, Dir, rect.width * 0.5f), _startColor, Vector2.zero);
             // right 1
-            AddUIVertex(vh, CalculatePointRight(Vector2.zero, Dir, rect.width * 0.5f), _startColor, new Vector2(1, 0));
+            UGUIEffectHelper.AddUIVertex(vh, UGUIEffectHelper.CalculatePointRight(Vector2.zero, Dir, rect.width * 0.5f), _startColor, new Vector2(1, 0));
 
             // mid 2
-            AddUIVertex(vh, Dir * distance, _endColor, new Vector2(0.5f, 1));
+            UGUIEffectHelper.AddUIVertex(vh, Dir * distance, _endColor, new Vector2(0.5f, 1));
 
             vh.AddTriangle(0, 2, 1);
         }
