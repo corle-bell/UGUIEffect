@@ -18,10 +18,11 @@ namespace UiEffect
     [AddComponentMenu("UI/Effects/SpriteSheetAnimation"), RequireComponent(typeof(Image))]
     public class UISpriteSheetAnimation : BaseMeshEffect
     {
-        [SerializeField] protected float Duration;
+        [SerializeField] protected float Duration=2;
         [SerializeField] protected int Row = 2;
         [SerializeField] protected int Col = 2;
 
+        [SerializeField] protected int EmptyFrame = 0;
 
         [SerializeField] protected Vector2 FrameUV;
 
@@ -29,6 +30,7 @@ namespace UiEffect
 
         [SerializeField] protected int lastId;
 
+        private protected float tick = 0;
         void Awake()
         {
             FrameSize.x = 1.0f / Col;
@@ -38,15 +40,25 @@ namespace UiEffect
 
         private void Update()
         {
-            float d = Time.realtimeSinceStartup % Duration;
-            int frameId = (int)((d / Duration) * Row * Col);
+            float d = tick % Duration;
+            int frameCount = Row * Col - EmptyFrame;
+            int frameId = (int)((d / Duration) * frameCount);
+            
+            tick += Time.deltaTime;
 
             if (frameId == lastId) return;
 
             lastId = frameId;
             FrameUV.x = frameId % Col * FrameSize.x;
-            FrameUV.y = frameId / Col * FrameSize.y;
+            FrameUV.y = (Row-1-frameId / Col) * FrameSize.y;
+            
             Refresh();
+
+        }
+
+        public void ReStart()
+        {
+            tick = 0;
         }
 
         public override void ModifyMesh(VertexHelper vh)
@@ -92,5 +104,14 @@ namespace UiEffect
                 graphic.SetVerticesDirty();
             }
         }
+        
+#if UNITY_EDITOR
+        [UnityEditor.MenuItem("CONTEXT/UISpriteSheetAnimation/Restart")]
+        public static void _Restart(UnityEditor.MenuCommand command)
+        {
+            var data = command.context as UISpriteSheetAnimation;
+            data.ReStart();
+        }
+#endif
     }
 }
