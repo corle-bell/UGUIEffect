@@ -2,7 +2,7 @@
 
 图片圆角化
 
-https://github.com/corle-bell/UGUIEffect/blob/main/Screenshoot/UIRoundedClip.png
+![https://github.com/corle-bell/UGUIEffect/blob/main/Screenshoot/UIRoundedClip.png](https://github.com/corle-bell/UGUIEffect/blob/main/Screenshoot/UIRoundedClip.png)
 
 # UISpriteSheetAnimation
 
