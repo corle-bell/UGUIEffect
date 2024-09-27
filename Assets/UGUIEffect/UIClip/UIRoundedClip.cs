@@ -47,6 +47,8 @@ namespace UiEffect
         {
             halfWidth = width *0.5f;
             halfHeight = height *0.5f;
+
+            segments = Mathf.Max(segments, 0);
             
             // 添加圆心
             UGUIEffectHelper.AddUIVertex(vh, Vector2.zero, verColor, new Vector2(0.5f, 0.5f));
