@@ -1,0 +1,39 @@
+# .github/workflows/update-upm-on-tag.yml
+
+name: Update UPM Package on Tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-push-upm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Prepare and push UPM branch
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        TAG_NAME="${GITHUB_REF#refs/tags/}"
+        echo "Triggered by Tag: $TAG_NAME"
+        
+        git checkout -B upm
+        
+        git merge --ff-only "origin/$TAG_NAME" || echo "Tag $TAG_NAME already merged or upm branch is ahead."
+        
+        git add .
+        
+        git commit -m "UPM package update for Tag: $TAG_NAME" || echo "No changes to commit for UPM branch."
+        
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/corle-bell/UGUIEffect.git HEAD:upm --force
