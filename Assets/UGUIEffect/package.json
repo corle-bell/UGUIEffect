@@ -1,12 +1,16 @@
 {
-  "name": "com.core-bell.ugui-effect",
-  "version": "1.0.2",
-  "displayName": "UGUI-EFFECT",
+  "name": "com.corle-bell.ugui-effect",
+  "version": "1.0.3",
+  "displayName": "UGUI Effect",
   "description": "UGUI Vertex Effect",
-  "unity": "2021.3.x",
+  "unity": "2021.3",
   "author": {
-    "name": "core-bell",
+    "name": "corle-bell",
     "url": "https://github.com/corle-bell"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/corle-bell/UGUIEffect.git"
+  }
 }
