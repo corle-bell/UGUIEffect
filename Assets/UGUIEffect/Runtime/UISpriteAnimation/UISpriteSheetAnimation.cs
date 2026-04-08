@@ -30,21 +30,60 @@ namespace UiEffect
 
         [SerializeField] protected int lastId;
 
+        [SerializeField] protected bool autoPlay=true;
+        
         private protected float tick = 0;
+        
+        private int status;
         void Awake()
         {
             FrameSize.x = 1.0f / Col;
             FrameSize.y = 1.0f / Row;
             lastId = -1;
+
+            if (autoPlay)
+            {
+                Play();
+            }
+        }
+
+        public UISpriteSheetAnimation Play()
+        {
+            status = 1;
+            return this;
+        }
+        
+        public UISpriteSheetAnimation Stop()
+        {
+            status = 0;
+            return this;
+        }
+
+        public UISpriteSheetAnimation Clear()
+        {
+            ReStart();
+            Update(0);
+            Refresh();
+            return this;
         }
 
         private void Update()
+        {
+            switch (status)
+            {
+                case 1:
+                    Update(Time.deltaTime);
+                    break;
+            }
+        }
+
+        protected virtual void Update(float _delta)
         {
             float d = tick % Duration;
             int frameCount = Row * Col - EmptyFrame;
             int frameId = (int)((d / Duration) * frameCount);
             
-            tick += Time.deltaTime;
+            tick += _delta;
 
             if (frameId == lastId) return;
 
@@ -53,12 +92,12 @@ namespace UiEffect
             FrameUV.y = (Row-1-frameId / Col) * FrameSize.y;
             
             Refresh();
-
         }
 
-        public void ReStart()
+        public UISpriteSheetAnimation ReStart()
         {
             tick = 0;
+            return this;
         }
 
         public override void ModifyMesh(VertexHelper vh)
@@ -111,6 +150,27 @@ namespace UiEffect
         {
             var data = command.context as UISpriteSheetAnimation;
             data.ReStart();
+        }
+        
+        [UnityEditor.MenuItem("CONTEXT/UISpriteSheetAnimation/Clear")]
+        public static void _Clear(UnityEditor.MenuCommand command)
+        {
+            var data = command.context as UISpriteSheetAnimation;
+            data.Clear();
+        }
+        
+        [UnityEditor.MenuItem("CONTEXT/UISpriteSheetAnimation/Stop")]
+        public static void _Stop(UnityEditor.MenuCommand command)
+        {
+            var data = command.context as UISpriteSheetAnimation;
+            data.Stop();
+        }
+        
+        [UnityEditor.MenuItem("CONTEXT/UISpriteSheetAnimation/Play")]
+        public static void _Play(UnityEditor.MenuCommand command)
+        {
+            var data = command.context as UISpriteSheetAnimation;
+            data.Play();
         }
 #endif
     }
